@@ -1,5 +1,5 @@
 
-
+//initial state for reducer
 export const initialState = {
     additionalPrice: 0,
     car: {
@@ -10,24 +10,24 @@ export const initialState = {
       features: []
     },
     store: [
-      { id: 1, name: 'V-6 engine', price: 1500 },
-      { id: 2, name: 'Racing detail package', price: 1500 },
-      { id: 3, name: 'Premium sound system', price: 500 },
-      { id: 4, name: 'Rear spoiler', price: 250 }
+      { id: 1, name: 'V-6 engine', price: 1500, purchased: false },
+      { id: 2, name: 'Racing detail package', price: 1500, purchased: false},
+      { id: 3, name: 'Premium sound system', price: 500, purchased: false },
+      { id: 4, name: 'Rear spoiler', price: 250, purchased: false }
     ]
   };
 
 export const carReducer = (state = initialState, action) => {
-    console.log(action);
+    
     const featureTracker = state.car.features.map(feature => feature.name)
     switch (action.type) {
         case "ADD_FEATURE":
-            if(featureTracker.includes(action.payload.name)) {
+            if(featureTracker === action.payload.name) {
                 return{...state}
             } else {
                 return {
-                    ...state,
-                    additionalPrice: state.additionalPrice += action.payload.price,
+                    ...state,                    
+                    additionalPrice: state.additionalPrice + action.payload.price,
                     car: {
                         ...state.car,
                         features: [
@@ -41,11 +41,11 @@ export const carReducer = (state = initialState, action) => {
             case "REMOVE_FEATURE":
               return {
                 ...state,
-                additionalPrice: state.additionalPrice -= action.payload.price,
+                additionalPrice: state.additionalPrice - action.payload.price,
                 car: {
                   ...state.car,
-                  features: state.car.features.filter(feature => {
-                    return feature !== action.payload
+                  features: state.car.features.filter(item => {
+                    return item !== action.payload
                   })
                 }
               }

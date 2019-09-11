@@ -14,7 +14,7 @@ const Header = props => {
 };
 
 const mapStateToProps = (state) => {
-  console.log('mSTP state:', state);
+
   return {
     name: state.car.name,
     image: state.car.image,
