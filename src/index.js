@@ -2,11 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import { carReducer } from './reducers/carReducer';
 import App from './App';
 
 import 'bulma/css/bulma.css';
 import './styles.scss';
-import { carReducer } from './reducers/carReducer';
+
 
 const store = createStore(carReducer);
 

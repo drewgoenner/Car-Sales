@@ -1,6 +1,6 @@
 
 
-const initialState = {
+export const initialState = {
     additionalPrice: 0,
     car: {
       price: 26395,
@@ -18,5 +18,39 @@ const initialState = {
   };
 
 export const carReducer = (state = initialState, action) => {
-    console.log(action)
+    console.log(action);
+    const featureTracker = state.car.features.map(feature => feature.name)
+    switch (action.type) {
+        case "ADD_FEATURE":
+            if(featureTracker.includes(action.payload.name)) {
+                return{...state}
+            } else {
+                return {
+                    ...state,
+                    additionalPrice: state.additionalPrice += action.payload.price,
+                    car: {
+                        ...state.car,
+                        features: [
+                          ...state.car.features,
+                          {name: action.payload.name, price: action.payload.price}
+                        ]
+                    }
+                }
+            }
+
+            case "REMOVE_FEATURE":
+              return {
+                ...state,
+                additionalPrice: state.additionalPrice -= action.payload.price,
+                car: {
+                  ...state.car,
+                  features: state.car.features.filter(feature => {
+                    return feature !== action.payload
+                  })
+                }
+              }
+
+            default: 
+              return state
+    }
 }
